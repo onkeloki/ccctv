@@ -1,0 +1,38 @@
+mixin loadFileFromPath(file, dir )
+	- dir = dir || ""
+
+	- file = dir+""+file
+	- ext = file.substr(-3)
+
+	if ext == ".js"
+		script(type='text/javascript', src=file)
+	if ext == "css"
+		link(rel="stylesheet" ,href=file)
+
+
+
+
+// - JS STUFF from node
+- node_modules = "node_modules"
++loadFileFromPath("/jquery/dist/jquery.min.js","node_modules")
++loadFileFromPath("/moment/moment.js","node_modules")
++loadFileFromPath("/browser-detection/src/browser-detection.js","node_modules")
++loadFileFromPath("/handlebars/dist/handlebars.js","node_modules")
+// - Bootstrap
++loadFileFromPath("/bootstrap/dist/js/bootstrap.bundle.min.js","node_modules")
++loadFileFromPath("/bootstrap/dist/css/bootstrap.min.css","node_modules")
+
+
+// - OWN STUFF
++loadFileFromPath("/overall.js", "js/own")
++loadFileFromPath("/Navigation.js", "js/own")
++loadFileFromPath("/default.css", "css")
+
++loadFileFromPath("/BaseComponent.js","js/own")
++loadFileFromPath("/ConferencesDS.js","js/own")
++loadFileFromPath("/App.js","js/own")
+
+
+
+
+

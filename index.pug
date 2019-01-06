@@ -1,0 +1,91 @@
+mixin loadCss(name)
+	link(rel="stylesheet" ,href="/css/" + name + ".css")
+mixin loadJs(name)
+	Script(type='text/javascript', src="/js/" + name + ".js")
+mixin manageBoxCounters(boxId)
+	if !boxIdCounter
+		- boxIdCounter = {}
+	if !boxIdCounter[boxId]
+
+		- boxIdCounter[boxId] = 0
+	- boxIdCounter[boxId] = boxIdCounter[boxId]+1
+
+mixin autoInitBoxEmptyDiv(boxId)
+	+manageBoxCounters(boxId)
+	- count = boxIdCounter[boxId]
+	div.box-body(id=boxId + "_" + count,class=boxId)
+		block
+	+loadJsforAutoInitBox(boxId,count)
+
+
+mixin loadJsforAutoInitBox(boxId,count)
+	script(type='text/javascript').
+		initAutoinitbox("#{boxId}", "#{count}")
+
+
+
+doctype html5
+html
+	head
+		meta(id="viewport" name="viewport" content="width=device-width, initial-scale=1.0")
+		include pug/defaultincludes
+
+		script(type="text/javascript").
+
+			var vp = document.getElementById('viewport');
+
+			var initialScale = Math.max(screen.width, screen.height) / 1920;
+
+			vp.setAttribute('content', 'width=device-width, initial-scale=' + initialScale + ', maximum-scale=' +
+				initialScale, +'minimum-scale=' + initialScale);
+
+	body
+		#poster
+			.blend
+		.wrapper
+			//-nav#sidebar
+				ul#mainmenu.list-unstyled
+					- menu = []
+					- menu.push({"label": "search"})
+					- menu.push({"label": "search"})
+					- menu.push({"label": "search"})
+					- menu.push({"label": "search"})
+					for m in menu
+						li.navigation_row a #{m.label}
+			#infoarea
+				h1 Loading . . . .
+			#rightarea.w-100(style="overflow:hidden")
+
+
+		script(id="tpl_info",type="text/x-handlebars-template")
+			h1.conferencetitle {{conference.title}}
+			h1 {{event.title}}
+			h2 {{event.subtitle}}
+		script(id="tpl_playerview",type="text/x-handlebars-template")
+			.category(style="overflow:hidden;width:100%").
+				{{#each tags as |value key|}}
+
+						<div class="slidergroup">
+							<h1>{{key}} - <span class="counter">{{value.length}}</span></h1>
+							<div class="slider">
+										{{#each value as |event|}}
+											<div class="slidercard" data-guid="{{event.guid}}" >
+												<img src="{{event.thumb_url}}">
+
+											<!--<h2>{{event.title}}</h2>-->
+											</div>
+										{{/each}}
+									</div>
+								</div>
+							{{/each}}
+
+script.
+	app = new App();
+
+
+
+
+
+
+
+
