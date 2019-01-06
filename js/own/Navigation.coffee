@@ -1,19 +1,23 @@
 class Navigation
-	constructor: ()->
+	constructor: (@app)->
 		@selectionClass = "navigation_selected"
 		$("body").on "keydown", @keyup.bind @
-
 		if @getSelectedTag().length is 0
 			@selectItem $(".slidercard")[0]
-
 	keyup: (e)->
-		console.log e
 		switch
 			when  e.key is "ArrowLeft" then @left e
 			when  e.key is "ArrowRight" then @right e
 			when  e.key is "ArrowUp" then @up e
 			when  e.key is "ArrowDown" then @down e
+			when e.keyCode is 13 then @selectKey e
 
+	selectKey: (e)->
+		$("body").trigger "eventclicked"
+		#guid = $(".slidercard.navigation_selected").data("guid")
+		#event = @app.DS.eventsByGuid[guid]
+		#conference = @app.DS.byAcronym[@loadedAcronym]
+		#@app.infoArea.onEventSelect(event, conference)
 
 	left: (e)->
 		if not @mainMenuIsSelected() && @firstItemIsSelected()
@@ -27,12 +31,11 @@ class Navigation
 				@selectItem $(".group_selected .navigation_entrypoint")[0]
 			else
 				@selectItem $(".slidercard")[0]
-
 		else if @itemIsSelected()
 			@selectNextSliderCard()
-
-
 	up: (e)->
+		return if @infoIsLarge()
+
 		if @mainMenuIsSelected()
 			@selectMenuPrev()
 		else if @itemIsSelected()
@@ -40,10 +43,16 @@ class Navigation
 
 # no
 	down: (e)->
+		if @infoIsLarge()
+			app.infoArea.makeSmall()
+			return
+
 		if @mainMenuIsSelected()
 			@selectMenuNext()
 		else if @itemIsSelected()
 			@selectNextSlider()
+	infoIsLarge: ()->
+		$("#infoArea.large").length > 0
 
 	selectPrevSliderCard: ()->
 		@selectItem @getPrevTagByClass(".slidercard")
@@ -75,13 +84,9 @@ class Navigation
 			foundSelected = true if $(sg).hasClass("group_selected")
 			beforeSliders.push sg if not foundSelected
 			afterSliders.push sg if  foundSelected
-
-
 		$(beforeSliders).addClass("hidden-out")
 		$(afterSliders).removeClass("hidden-out")
-		console.log "xxx", beforeSliders
-
-
+		@fixNotSelectedSlidersAfter(afterSliders)
 
 
 	selectNextSlider: ()->
@@ -116,20 +121,27 @@ class Navigation
 					found = i
 		$($(all).get(found - 1))
 
-
-
-
-
-
-
-
 	scrollToSelectedItem: ()->
 		slider = $(".slidercard.navigation_selected").parent(".slider")
 		i = @getSelectedTag().index()
 		w = @getSelectedTag().outerWidth(true)
-		console.log w
+		w = $(".slidercard").outerWidth(true)
 		slider.css("position", "relative")
 		slider.css("left", w * i * -1)
+
+	fixNotSelectedSlidersBefore: ()->
+		$(".slidergroup:not('.group_selected') .navigation_entrypoint").each (e, cur)->
+			slider = $(cur).parent(".slider")
+			unscaledWidth = $($(".slidercard").get($(".slidercard").length - 1)).width()
+			$(slider).css("left", unscaledWidth * -1 * $(cur).index())
+
+	fixNotSelectedSlidersAfter: (afterSliderGroups)->
+		$(afterSliderGroups).each (e, sliderGroup)->
+			slider = $(sliderGroup).find(".slider")
+			cur = $(slider).find(".navigation_entrypoint")
+			curindex = Math.max(0, $(cur).index())
+			unscaledWidth = $($(".slidercard").get($(".slidercard").length - 1)).outerWidth(true)
+			$(slider).css("left", unscaledWidth * -1 * curindex)
 
 
 	firstItemIsSelected: ()->
@@ -169,7 +181,10 @@ class Navigation
 			if not $(sg).hasClass("group_selected")
 				$(".slidergroup").removeClass("group_selected")
 				$(sg).addClass "group_selected"
-		$("body").trigger "eventselected"
+		guid = $(".slidercard.navigation_selected").data("guid")
+		event = @app.DS.eventsByGuid[guid]
+		conference = @app.DS.byAcronym[@loadedAcronym]
+		@app.infoArea.onEventSelect(event, conference)
 
 	getSelectedTag: ()->
 		$("." + @selectionClass)

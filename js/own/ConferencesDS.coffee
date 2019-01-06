@@ -10,6 +10,8 @@ class ConferencesDS extends BaseComponent
 
 
 	reload: (successCb, fault)->
+
+
 		@_get
 			url: @all_conferences
 			success: (json)=>

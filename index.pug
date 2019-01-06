@@ -40,6 +40,15 @@ html
 				initialScale, +'minimum-scale=' + initialScale);
 
 	body
+		#playerlayer.d-none
+			video(id="videoplayer",width="100%" ,height="100%", src="",)
+
+
+			#controlls
+				h1 Play
+				h2 Pause
+
+
 		#poster
 			.blend
 		.wrapper
@@ -61,10 +70,10 @@ html
 			h1.conferencetitle {{conference.title}}
 			h1 {{event.title}}
 			h2 {{event.subtitle}}
+			#playbutton.btn.btn-large.btn-gui PLAY
 		script(id="tpl_playerview",type="text/x-handlebars-template")
 			.category(style="overflow:hidden;width:100%").
 				{{#each tags as |value key|}}
-
 						<div class="slidergroup">
 							<h1>{{key}} - <span class="counter">{{value.length}}</span></h1>
 							<div class="slider">

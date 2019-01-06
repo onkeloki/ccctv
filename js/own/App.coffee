@@ -2,17 +2,26 @@ class App extends BaseComponent
 	constructor: ()->
 		@initAcronym = "35c3";
 		@loadedAcronym;
-		@navigation = new Navigation()
-		@DS = new ConferencesDS()
+		@navigation = new Navigation(@)
+		@DS = new ConferencesDS(@)
+		@infoArea = new InfoArea(@)
+		@player = new Player(@)
 		@DS.reload @launch.bind(@)
-		$("body").on "eventselected", ()=>
-			html = $("#tpl_info").html()
-			infoTPL = Handlebars.compile(html)
+
+		$("body").on "eventclicked", ()=>
+			@player.load("URL")
 			guid = $(".slidercard.navigation_selected").data("guid")
 			event = @DS.eventsByGuid[guid]
 			conference = @DS.byAcronym[@loadedAcronym]
-			$("#infoarea").html infoTPL({event: event, conference: conference})
-			$("#poster").css("background-image", "url(" + event.poster_url + ")");
+			@infoArea.onEventClick(event, conference)
+
+
+
+
+
+
+
+
 
 	launch: ()->
 		@conferenceView(@initAcronym)

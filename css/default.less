@@ -100,6 +100,7 @@ body {
 }
 
 #infoArea {
+  transition: all 0.5s;
   h1.conferencetitle {
 	color: @theme-color !important;
   }
@@ -121,6 +122,7 @@ body {
 }
 
 #rightarea {
+  transition: all 0.5s;
   height: calc(100vh - @info-height);
   margin-left: @sideBarWidth;
   .slider {
@@ -242,3 +244,30 @@ body {
   }
 }
 
+#infoArea.large {
+  height: calc(100vh - @info-height);
+}
+
+#rightarea.small {
+  height: @info-height;
+}
+
+#playerlayer {
+  #controlls {
+	background-color: rgba(255, 255, 255, 0.5);
+	position: absolute;
+	bottom: -10vh;
+	width: 100%;
+
+  }
+
+}
+
+.btn.btn-gui {
+  &.btn-large {
+	font-size: @font-size-text;
+  }
+  &.active {
+	background-color: @theme-color;
+  }
+}
