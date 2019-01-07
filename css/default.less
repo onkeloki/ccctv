@@ -134,17 +134,25 @@ body {
 	flex-wrap: nowrap;
 	.slidercard {
 	  background-color: #000;
-
 	  transition: 500ms;
 	  &.navigation_selected {
-		img {
 
+		img {
 		  opacity: 1;
 		  webkit-box-shadow: 0px 0px 0px 5px @theme-color;
 		  -moz-box-shadow: 0px 0px 0px 5px @theme-color;
 		  box-shadow: 0px 0px 0px 5px @theme-color;
 		}
+		&.navigation_clicked {
+		  img {
+			opacity: 1;
+			webkit-box-shadow: 0px 0px 0px 5px @color-white;
+			-moz-box-shadow: 0px 0px 0px 5px @color-white;
+			box-shadow: 0px 0px 0px 5px @color-white;
+		  }
+		}
 	  }
+
 	  &.navigation_selected:first-child {
 		//margin: 0px 5px 0px 20px;
 
@@ -244,8 +252,16 @@ body {
   }
 }
 
-#infoArea.large {
-  height: calc(100vh - @info-height);
+#infoArea {
+  .buttons {
+	display: none
+  }
+  &.large {
+	height: calc(100vh - @info-height);
+	.buttons {
+	  display: block
+	}
+  }
 }
 
 #rightarea.small {
@@ -264,8 +280,11 @@ body {
 }
 
 .btn.btn-gui {
+
   &.btn-large {
+	color: @color-white;
 	font-size: @font-size-text;
+	border: 1px solid @theme-color
   }
   &.active {
 	background-color: @theme-color;

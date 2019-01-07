@@ -13,19 +13,30 @@ class Navigation
 			when e.keyCode is 13 then @selectKey e
 
 	selectKey: (e)->
-		$("body").trigger "eventclicked"
-		#guid = $(".slidercard.navigation_selected").data("guid")
-		#event = @app.DS.eventsByGuid[guid]
-		#conference = @app.DS.byAcronym[@loadedAcronym]
-		#@app.infoArea.onEventSelect(event, conference)
+		if $(".navigation_clicked").length > 0
+			@app.infoArea.selectKey()
+			return
+
+		guid = $(".slidercard.navigation_selected").data("guid")
+		@app.DS.loadRecordings guid, (event)=>
+			@app.infoArea.onEventClick(event)
+
 
 	left: (e)->
+		if $(".navigation_clicked").length > 0
+			@app.infoArea.selectPrevButton()
+			return
+
 		if not @mainMenuIsSelected() && @firstItemIsSelected()
 			@selectItem $("#mainmenu li:first-child")
 		else if @itemIsSelected()
 			@selectPrevSliderCard()
 
 	right: (e)->
+		if $(".navigation_clicked").length > 0
+			@app.infoArea.selectNextButton()
+			return
+
 		if @mainMenuIsSelected()
 			if $(".slidergroup.group_selected").length > 0
 				@selectItem $(".group_selected .navigation_entrypoint")[0]
@@ -183,7 +194,7 @@ class Navigation
 				$(sg).addClass "group_selected"
 		guid = $(".slidercard.navigation_selected").data("guid")
 		event = @app.DS.eventsByGuid[guid]
-		conference = @app.DS.byAcronym[@loadedAcronym]
+		conference = @app.DS.byAcronym[@app.loadedAcronym]
 		@app.infoArea.onEventSelect(event, conference)
 
 	getSelectedTag: ()->

@@ -8,10 +8,7 @@ class ConferencesDS extends BaseComponent
 		@eventsByGuid = {}
 		@acronymToTags = {}
 
-
 	reload: (successCb, fault)->
-
-
 		@_get
 			url: @all_conferences
 			success: (json)=>
@@ -29,6 +26,22 @@ class ConferencesDS extends BaseComponent
 					createPartInObject(arr, @bySlug)
 				if successCb
 					successCb()
+
+	loadRecordings: (eventGUid, successCb)->
+		$(".navigation_selected ").addClass("navigation_clicked")
+		if @eventsByGuid[eventGUid].recordings
+			successCb @eventsByGuid[eventGUid]
+			return
+		@_get
+			url: "https://media.ccc.de/public/events/" + eventGUid
+			success: (json)=>
+				console.log "RECORDINGS", json.recordings
+				@eventsByGuid[eventGUid].recordings = json.recordings
+				if successCb
+					successCb(@eventsByGuid[eventGUid])
+
+
+
 
 	depploadEventsByAcronym: (acronym, successCb)->
 		@_get

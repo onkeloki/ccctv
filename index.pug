@@ -70,7 +70,16 @@ html
 			h1.conferencetitle {{conference.title}}
 			h1 {{event.title}}
 			h2 {{event.subtitle}}
-			#playbutton.btn.btn-large.btn-gui PLAY
+			//p(style="color:#fff;width:75%;height:10vh")
+				| {{event.description}}
+			.buttons
+				//.btn.btn-large.btn-gui INFO
+				span(style="color:#fff") Play:
+				#recordingButtons
+
+					//.btn.btn-large.btn-gui PLAY
+
+
 		script(id="tpl_playerview",type="text/x-handlebars-template")
 			.category(style="overflow:hidden;width:100%").
 				{{#each tags as |value key|}}

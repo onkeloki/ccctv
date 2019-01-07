@@ -31,5 +31,4 @@ pad = (str, max) ->
 	if str.length < max then pad('0' + str, max) else str
 
 
-$().ready ()->
-	window.own.browserDetection = new browserDetection({addClasses: true})
+

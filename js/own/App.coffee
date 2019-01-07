@@ -8,12 +8,6 @@ class App extends BaseComponent
 		@player = new Player(@)
 		@DS.reload @launch.bind(@)
 
-		$("body").on "eventclicked", ()=>
-			@player.load("URL")
-			guid = $(".slidercard.navigation_selected").data("guid")
-			event = @DS.eventsByGuid[guid]
-			conference = @DS.byAcronym[@loadedAcronym]
-			@infoArea.onEventClick(event, conference)
 
 
 

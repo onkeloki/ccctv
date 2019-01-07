@@ -1,11 +1,10 @@
 {
   "name": "ccc-tv",
   "dependencies": {
-    "bootstrap": "^4.2.1",
-    "browser-detection": "^0.3.3",
-    "handlebars": "^4.0.12",
-    "jquery": "^3.3.1",
-    "moment": "^2.23.0",
-    "popper.js": "^1.14.6"
+	"bootstrap": "^4.2.1",
+	"handlebars": "^4.0.12",
+	"jquery": "^3.3.1",
+	"moment": "^2.23.0",
+	"popper.js": "^1.14.6"
   }
 }
