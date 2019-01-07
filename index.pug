@@ -41,12 +41,17 @@ html
 
 	body
 		#playerlayer.d-none
-			video(id="videoplayer",width="100%" ,height="100%", src="",)
+			video(id="videoplayer",width="100%" ,height="100%", src="")
+		#controlls.hidden
+			.info
+				h1.conferencetitle
+				h1.event_title
+				h2.event_subtitle
+			.bar
+				div play
+				div PAUSE
 
 
-			#controlls
-				h1 Play
-				h2 Pause
 
 
 		#poster
@@ -68,16 +73,11 @@ html
 
 		script(id="tpl_info",type="text/x-handlebars-template")
 			h1.conferencetitle {{conference.title}}
-			h1 {{event.title}}
-			h2 {{event.subtitle}}
-			//p(style="color:#fff;width:75%;height:10vh")
-				| {{event.description}}
+			h1.event_title {{event.title}}
+			h2.event_subtitle {{event.subtitle}}
 			.buttons
-				//.btn.btn-large.btn-gui INFO
 				span(style="color:#fff") Play:
 				#recordingButtons
-
-					//.btn.btn-large.btn-gui PLAY
 
 
 		script(id="tpl_playerview",type="text/x-handlebars-template")

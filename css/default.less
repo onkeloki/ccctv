@@ -101,20 +101,7 @@ body {
 
 #infoArea {
   transition: all 0.5s;
-  h1.conferencetitle {
-	color: @theme-color !important;
-  }
-  h1 {
-	color: @color-white;
-	font-size: calc(@font-size-headlines + 2vh);
-	font-weight: 100;
 
-  }
-  h2 {
-	color: @color-white;
-	font-size: calc(@font-size-headlines);
-	font-weight: 100;
-  }
   padding-left: @app-padding-left;
   margin-left: @sideBarWidth;
   height: @info-height;
@@ -269,11 +256,29 @@ body {
 }
 
 #playerlayer {
-  #controlls {
-	background-color: rgba(255, 255, 255, 0.5);
-	position: absolute;
-	bottom: -10vh;
-	width: 100%;
+
+}
+
+#controlls {
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+  transition: all 0.5s;
+  opacity: 1;
+  .info {
+	padding-left: @app-padding-left;
+  }
+  .bar {
+	padding-left: @app-padding-left;
+	background-color: #000;
+	* {
+	  color: #fff;
+	}
+  }
+  &.hidden {
+	bottom: -100%;
+	opacity: 0;
+	transition: all 0.5s;
 
   }
 
@@ -289,4 +294,21 @@ body {
   &.active {
 	background-color: @theme-color;
   }
+}
+
+h1.conferencetitle {
+  color: @theme-color !important;
+}
+
+h1 {
+  color: @color-white;
+  font-size: calc(@font-size-headlines + 2vh);
+  font-weight: 100;
+
+}
+
+h2 {
+  color: @color-white;
+  font-size: calc(@font-size-headlines);
+  font-weight: 100;
 }

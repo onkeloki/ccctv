@@ -5,13 +5,18 @@ class Navigation
 		if @getSelectedTag().length is 0
 			@selectItem $(".slidercard")[0]
 	keyup: (e)->
+		console.log e.keyCode
 		switch
 			when  e.key is "ArrowLeft" then @left e
 			when  e.key is "ArrowRight" then @right e
 			when  e.key is "ArrowUp" then @up e
 			when  e.key is "ArrowDown" then @down e
 			when e.keyCode is 13 then @selectKey e
+			when e.keyCode is 27 then @exitKey e
 
+	exitKey: (e)->
+		if @app.player.isOpen()
+			@app.player.hide()
 	selectKey: (e)->
 		if $(".navigation_clicked").length > 0
 			@app.infoArea.selectKey()

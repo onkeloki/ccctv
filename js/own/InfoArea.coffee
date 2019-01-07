@@ -11,7 +11,7 @@ class InfoArea extends BaseComponent
 
 	selectKey: ()->
 		url = $("#recordingButtons .active").data("file");
-		console.log("1",url)
+		console.log("1", url)
 		@app.player.play(url);
 
 	selectNextButton: ()->
@@ -25,6 +25,9 @@ class InfoArea extends BaseComponent
 		conference = @app.DS.byAcronym[@app.loadedAcronym]
 		html = $("#tpl_info").html()
 		infoTPL = Handlebars.compile(html)
+		$(".conferencetitle").text(conference.title)
+		$(".event_title").text(event.title)
+		$(".event_subtitle").text(event.subtitle)
 		$("#infoarea").html infoTPL({event: event, conference: conference})
 		$("#poster").css("background-image", "url(" + event.poster_url + ")");
 		for r in event.recordings

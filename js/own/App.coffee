@@ -6,6 +6,7 @@ class App extends BaseComponent
 		@DS = new ConferencesDS(@)
 		@infoArea = new InfoArea(@)
 		@player = new Player(@)
+		#@player.play("https://cdn.media.ccc.de/congress/2018/h264-hd/35c3-9768-fra-Open_Source_Orgelbau.mp4");
 		@DS.reload @launch.bind(@)
 
 
