@@ -267,12 +267,38 @@ body {
   opacity: 1;
   .info {
 	padding-left: @app-padding-left;
+	.timer {
+	  float: right;
+	  color: @color-white;
+	  margin-right: @app-padding-left;
+	}
+  }
+  .progress {
+	background-color: rgba(255, 255, 255, 0.5);
+	border-radius: 0px;
+	height: 2vh;
+	.progress-bar {
+	  background-color: @theme-color;
+	}
   }
   .bar {
+	height: 15vh;
 	padding-left: @app-padding-left;
-	background-color: #000;
+	background-color: rgba(0, 0, 0, 0.8);
 	* {
 	  color: #fff;
+	}
+	#playpause {
+	  background-color: @theme-color;
+	  border-radius: 50%;
+	  margin: 0px auto;
+	  margin-top: calc(2.5vh);
+	  height: calc(15vh - 5vh);
+	  width: calc(15vh - 5vh);
+	  &.playing {
+		background-color: red;
+	  }
+
 	}
   }
   &.hidden {
