@@ -6,21 +6,24 @@ class App extends BaseComponent
 		@DS = new ConferencesDS(@)
 		@infoArea = new InfoArea(@)
 		@player = new Player(@)
-		#@player.play("https://cdn.media.ccc.de/congress/2018/h264-hd/35c3-9768-fra-Open_Source_Orgelbau.mp4");
 		@DS.reload @launch.bind(@)
+		$("body").on "keydown", @keyup.bind @
 
-
-
-
-
-
-
-
-
+	keyup: (e)->
+		switch
+			when  e.key is "ArrowLeft" then @getKeyCatcher().left(e)
+			when  e.key is "ArrowRight" then @getKeyCatcher().right(e)
+			when  e.key is "ArrowUp" then @getKeyCatcher().up(e)
+			when e.key is "ArrowDown" then @getKeyCatcher().down(e)
+			when $.inArray(e.keyCode, [13, 32]) > -1 then @getKeyCatcher().selectKey(e)
+			when e.keyCode is 27 then @getKeyCatcher().exitKey(e)
+	getKeyCatcher: ()->
+		return @player if @player.catchesKey()
+		return @infoArea if @infoArea.catchesKey()
+		return @navigation
 
 	launch: ()->
 		@conferenceView(@initAcronym)
-
 
 	renderTemplate: (id, obj)->
 		$("#rightarea").empty()
@@ -28,12 +31,10 @@ class App extends BaseComponent
 		tpl = Handlebars.compile(html)
 		Handlebars.registerHelper "debug", (e)->
 			console.log "DEBUG", e.data
-
 		$("#rightarea").append tpl(obj)
 	conferenceView: (acronym)->
 		@DS.depploadEventsByAcronym acronym, (conference)=>
 			@loadedAcronym = acronym
 			@renderTemplate("playerview", conference)
-			console.log $(".slidercard")[0]
 			@navigation.selectItem $(".slidercard")[0]
 			return

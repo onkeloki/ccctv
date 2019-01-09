@@ -1,11 +1,11 @@
 class InfoArea extends BaseComponent
 	constructor: (@app)->
+		super @app
 
 
 	onEventSelect: (event, conference)->
 		html = $("#tpl_info").html()
 		infoTPL = Handlebars.compile(html)
-
 		$("#infoarea").html infoTPL({event: event, conference: conference})
 		$("#poster").css("background-image", "url(" + event.poster_url + ")");
 
@@ -13,6 +13,21 @@ class InfoArea extends BaseComponent
 		url = $("#recordingButtons .active").data("file");
 		console.log("1", url)
 		@app.player.play(url);
+
+
+	catchesKey: ()->
+		$("#infoarea").hasClass("large")
+
+	exitKey: ()->
+		@makeSmall()
+	up: ()->
+	down: ()->
+		@makeSmall()
+
+	right: ()->
+		@selectNextButton()
+	left: ()->
+		@selectPrevButton()
 
 	selectNextButton: ()->
 		if $("#recordingButtons .active").next().length > 0

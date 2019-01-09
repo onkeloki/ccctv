@@ -1,5 +1,6 @@
 class ConferencesDS extends BaseComponent
-	constructor: (@tag)->
+	constructor: (@app)->
+		super @app
 		@all_conferences = "/jsondata/conferences.json"
 		@rawDatas = {}
 		@bySlug = {}

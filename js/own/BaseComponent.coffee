@@ -1,24 +1,21 @@
 class BaseComponent
 	@htmlHashMap = null
 	constructor: (@tag)->
-		BaseComponent.htmlHashMap = {} if not BaseComponent.htmlHashMap?
-		@tag = $("<div>") if not @tag
 		@className = @.__proto__.constructor.name
-		@htmlTemplate = null
-		$(@tag).addClass(@className.toLowerCase())
-		@cssPath = "/components/#{@className}.css"
-		@templatePath = "/components/#{@className}.html"
-		$(@tag).data("instance", @)
-	_findInMe: (selecor)->
-		$(@tag).find(selecor)
 
-	###
-    EXECUTE GIVEN CALLBACK WITH TEMPLATE HTML
-    callback(html)
-  ###
-	_getTemplate: (name)->
-		html = @_findInMe("script." + name).html()
-		Handlebars.compile(html)
+
+	left: ()->
+		console.log "left() in #{@className}"
+	up: ()->
+		console.log "up() in #{@className}"
+	right: ()->
+		console.log "right() in #{@className}"
+	down: ()->
+		console.log "down() in #{@className}"
+	selectKey: ()->
+		console.log "selectKey() in #{@className}"
+	exitKey: ()->
+		console.log "exitKey() in #{@className}"
 
 	###
   SEND GET

@@ -1,18 +1,11 @@
 class Navigation
 	constructor: (@app)->
+		console.log @app
 		@selectionClass = "navigation_selected"
-		$("body").on "keydown", @keyup.bind @
 		if @getSelectedTag().length is 0
 			@selectItem $(".slidercard")[0]
-	keyup: (e)->
-		console.log e.keyCode
-		switch
-			when  e.key is "ArrowLeft" then @left e
-			when  e.key is "ArrowRight" then @right e
-			when  e.key is "ArrowUp" then @up e
-			when  e.key is "ArrowDown" then @down e
-			when e.keyCode is 13 then @selectKey e
-			when e.keyCode is 27 then @exitKey e
+
+
 
 	exitKey: (e)->
 		if @app.player.isOpen()
@@ -28,58 +21,21 @@ class Navigation
 
 
 	left: (e)->
-		if $(".navigation_clicked").length > 0
-			@app.infoArea.selectPrevButton()
-			return
-
-		if not @mainMenuIsSelected() && @firstItemIsSelected()
-			@selectItem $("#mainmenu li:first-child")
-		else if @itemIsSelected()
-			@selectPrevSliderCard()
-
-	right: (e)->
-		if $(".navigation_clicked").length > 0
-			@app.infoArea.selectNextButton()
-			return
-
-		if @mainMenuIsSelected()
-			if $(".slidergroup.group_selected").length > 0
-				@selectItem $(".group_selected .navigation_entrypoint")[0]
-			else
-				@selectItem $(".slidercard")[0]
-		else if @itemIsSelected()
-			@selectNextSliderCard()
-	up: (e)->
-		return if @infoIsLarge()
-
-		if @mainMenuIsSelected()
-			@selectMenuPrev()
-		else if @itemIsSelected()
-			@selectPrevSlider()
-
-# no
-	down: (e)->
-		if @infoIsLarge()
-			app.infoArea.makeSmall()
-			return
-
-		if @mainMenuIsSelected()
-			@selectMenuNext()
-		else if @itemIsSelected()
-			@selectNextSlider()
-	infoIsLarge: ()->
-		$("#infoArea.large").length > 0
-
-	selectPrevSliderCard: ()->
+		return if $(".navigation_selected").index() is 0
 		@selectItem @getPrevTagByClass(".slidercard")
 		@scrollToSelectedItem()
 
-	selectNextSliderCard: ()->
+	right: (e)->
 		card = @getNextTagByClass(".slidercard");
-		#return if the end of the row
 		return if card.index() is 0
 		@selectItem card
 		@scrollToSelectedItem()
+	up: (e)->
+		@selectPrevSlider()
+	down: (e)->
+		@selectNextSlider()
+
+
 
 	selectPrevSlider: ()->
 		currentGroup = $(".slidercard.navigation_selected").closest(".slidergroup")
